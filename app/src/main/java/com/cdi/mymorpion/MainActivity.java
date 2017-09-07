@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     String isWin;
 
     TextView tv;
-    Button b1, b2, b3, b4, b5, b6, b7, b8, b9;
+    Button b1, b2, b3, b4, b5, b6, b7, b8, b9, bNP;
 
     ConstraintLayout cl;
 
@@ -38,8 +38,9 @@ public class MainActivity extends AppCompatActivity {
         b7 = (Button) findViewById(R.id.button7);
         b8 = (Button) findViewById(R.id.button8);
         b9 = (Button) findViewById(R.id.button9);
+        bNP = (Button) findViewById(R.id.button10);
 
-
+        //enableAllButtons();
         cl.setBackgroundColor(Color.rgb(118, 152, 231));
         tv.setText("Joueur O, à vous de jouer !");
 
@@ -61,18 +62,26 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if (verif_win_O()){
+        if (verif_win_O()) {
             tv.setText("Joueur O, vous avez gagné !");
             cl.setBackgroundColor(Color.rgb(118, 152, 231));
+            disableAllButtons();
+            bNP.setVisibility(View.VISIBLE);
+
         } else if (verif_win_X()) {
             tv.setText("Joueur X, vous avez gagné !");
             cl.setBackgroundColor(Color.rgb(224, 134, 124));
+            disableAllButtons();
+            bNP.setVisibility(View.VISIBLE);
+        } else if (verif_draw()){
+            tv.setText("Match nul !");
+            disableAllButtons();
+            bNP.setVisibility(View.VISIBLE);
         }
 
     }
 
     public boolean verif_win_O() {
-
         //1ere ligne
         if ((b1.getText() == "O") && (b1.getText() == b2.getText()) && (b1.getText() == b3.getText()))
             return true;
@@ -129,5 +138,69 @@ public class MainActivity extends AppCompatActivity {
             return true;
 
         return false;
+    }
+
+    public boolean verif_draw() {
+        if ((!b1.getText().toString().isEmpty()) &&
+                (!b2.getText().toString().isEmpty()) &&
+                (!b3.getText().toString().isEmpty()) &&
+                (!b4.getText().toString().isEmpty()) &&
+                (!b5.getText().toString().isEmpty()) &&
+                (!b6.getText().toString().isEmpty()) &&
+                (!b7.getText().toString().isEmpty()) &&
+                (!b8.getText().toString().isEmpty()) &&
+                (!b9.getText().toString().isEmpty())) {
+            return true;
+        }
+        return false;
+    }
+
+    public void disableAllButtons() {
+        b1.setEnabled(false);
+        b2.setEnabled(false);
+        b3.setEnabled(false);
+        b4.setEnabled(false);
+        b5.setEnabled(false);
+        b6.setEnabled(false);
+        b7.setEnabled(false);
+        b8.setEnabled(false);
+        b9.setEnabled(false);
+
+    }
+
+    public void enableAllButtons() {
+        b1.setEnabled(true);
+        b2.setEnabled(true);
+        b3.setEnabled(true);
+        b4.setEnabled(true);
+        b5.setEnabled(true);
+        b6.setEnabled(true);
+        b7.setEnabled(true);
+        b8.setEnabled(true);
+        b9.setEnabled(true);
+
+    }
+
+    public void onClickNP(View v) {
+        enableAllButtons();
+        b1.setText("");
+        b2.setText("");
+        b3.setText("");
+        b4.setText("");
+        b5.setText("");
+        b6.setText("");
+        b7.setText("");
+        b8.setText("");
+        b9.setText("");
+
+        if (toggle) {
+            tv.setText("Joueur O, à vous de jouer !");
+            cl.setBackgroundColor(Color.rgb(118, 152, 231));
+        } else {
+            tv.setText("Joueur X, à vous de jouer !");
+            cl.setBackgroundColor(Color.rgb(224, 134, 124));
+        }
+
+        bNP.setVisibility(View.INVISIBLE);
     }
 }
